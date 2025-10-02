@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useConversationStore } from '@/lib/store';
 import { useConversationPlayer } from '@/hooks/useConversationPlayer';
 import MessageBubble from './MessageBubble';
@@ -12,6 +12,12 @@ interface ConversationViewProps {
 
 export default function ConversationView({ className = '' }: ConversationViewProps) {
   const { script, designConfig, playbackState } = useConversationStore();
+  const [isHydrated, setIsHydrated] = useState(false);
+  
+  // Ensure component is hydrated before rendering to prevent hydration mismatches
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
   
   const { displayedMessages, isTyping, typingSender } = useConversationPlayer({
     script,
@@ -70,6 +76,20 @@ export default function ConversationView({ className = '' }: ConversationViewPro
       )}
     </>
   );
+
+  // Show loading state until hydrated
+  if (!isHydrated) {
+    return (
+      <div className={`relative ${className}`}>
+        <div className="flex items-center justify-center h-full">
+          <div className="text-center text-gray-500">
+            <div className="w-8 h-8 mx-auto mb-2 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
+            <p className="text-sm">Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`relative ${className}`}>
