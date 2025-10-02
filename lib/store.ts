@@ -54,6 +54,17 @@ const sampleScript: Script = {
       id: '4',
       sender: 'party2',
       text: 'It was a conversation simulator app! I built it to help people create realistic message animations. Pretty cool, right?',
+      content: [
+        {
+          type: 'text',
+          content: 'It was a conversation simulator app! I built it to help people create realistic message animations. Pretty cool, right? Check it out: '
+        },
+        {
+          type: 'link',
+          content: 'conversation-simulator.com',
+          url: 'https://conversation-simulator.com'
+        }
+      ],
       delayMs: 3000
     },
     {

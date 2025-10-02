@@ -1,7 +1,15 @@
+export interface MessageContent {
+  type: 'text' | 'link' | 'image';
+  content: string;
+  url?: string; // for links
+  alt?: string; // for images
+}
+
 export interface Message {
   id: string;
   sender: 'party1' | 'party2';
-  text: string;
+  text: string; // Keep for backward compatibility
+  content?: MessageContent[]; // New rich content
   delayMs: number;
 }
 

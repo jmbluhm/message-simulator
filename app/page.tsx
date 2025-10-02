@@ -117,7 +117,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto bg-gray-100 min-h-[calc(100vh-4rem)]">
-        <div className="flex h-[calc(100vh-8rem)]">
+        <div className="flex h-[calc(100vh-4rem)]">
           {/* Left Panel - Controls */}
           <div className="xl:w-2/5 w-full flex flex-col overflow-y-auto xl:pr-6 bg-gray-200  p-4">
             {/* Mobile Tabs */}
@@ -163,7 +163,7 @@ export default function Home() {
           <div className="hidden xl:block w-0.5 bg-gray-400"></div>
 
           {/* Right Panel - Conversation View */}
-          <div className="xl:w-3/5 w-full flex flex-col">
+          <div className="xl:w-3/5 w-full flex flex-col p-4">
             <div className="flex-1 min-h-0 mb-4">
               <ConversationView className="h-full" />
             </div>

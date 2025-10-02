@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useConversationStore } from '@/lib/store';
-import { Message } from '@/lib/types';
+import { Message, MessageContent } from '@/lib/types';
+import RichTextEditor from './RichTextEditor';
 import { 
   Plus, 
   Edit2, 
@@ -29,6 +30,7 @@ export default function ScriptEditor() {
   const [formData, setFormData] = useState({
     sender: 'party1' as 'party1' | 'party2',
     text: '',
+    content: [] as MessageContent[],
     delayMs: 1000
   });
 
@@ -36,6 +38,7 @@ export default function ScriptEditor() {
   const [editData, setEditData] = useState({
     sender: 'party1' as 'party1' | 'party2',
     text: '',
+    content: [] as MessageContent[],
     delayMs: 1000
   });
   const [error, setError] = useState<string | null>(null);
@@ -44,13 +47,19 @@ export default function ScriptEditor() {
     e.preventDefault();
     setError(null);
     
-    if (!formData.text.trim()) {
+    // Check if we have either text or rich content
+    const hasText = formData.text.trim();
+    const hasContent = formData.content.length > 0;
+    
+    if (!hasText && !hasContent) {
       setError('Message text cannot be empty');
       return;
     }
 
-    if (formData.text.length > 1000) {
-      setError('Message text is too long (max 1000 characters)');
+    // Calculate total text length for validation
+    const totalTextLength = formData.content.reduce((acc, item) => acc + item.content.length, 0) + formData.text.length;
+    if (totalTextLength > 2000) {
+      setError('Message text is too long (max 2000 characters)');
       return;
     }
 
@@ -63,12 +72,14 @@ export default function ScriptEditor() {
       addMessage({
         sender: formData.sender,
         text: formData.text.trim(),
+        content: formData.content.length > 0 ? formData.content : undefined,
         delayMs: formData.delayMs
       });
 
       setFormData({
         sender: 'party1',
         text: '',
+        content: [],
         delayMs: 1000
       });
     } catch (err) {
@@ -81,16 +92,21 @@ export default function ScriptEditor() {
     setEditData({
       sender: message.sender,
       text: message.text,
+      content: message.content || [],
       delayMs: message.delayMs
     });
   };
 
   const handleSaveEdit = () => {
-    if (!editData.text.trim() || !editingId) return;
+    const hasText = editData.text.trim();
+    const hasContent = editData.content.length > 0;
+    
+    if ((!hasText && !hasContent) || !editingId) return;
 
     updateMessage(editingId, {
       sender: editData.sender,
       text: editData.text.trim(),
+      content: editData.content.length > 0 ? editData.content : undefined,
       delayMs: editData.delayMs
     });
 
@@ -198,12 +214,10 @@ export default function ScriptEditor() {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Message Text
             </label>
-            <textarea
-              value={formData.text}
-              onChange={(e) => setFormData({ ...formData, text: e.target.value })}
+            <RichTextEditor
+              value={formData.content}
+              onChange={(content) => setFormData({ ...formData, content })}
               placeholder="Enter your message..."
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             />
           </div>
         </form>
@@ -280,11 +294,10 @@ export default function ScriptEditor() {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Message Text
                       </label>
-                      <textarea
-                        value={editData.text}
-                        onChange={(e) => setEditData({ ...editData, text: e.target.value })}
-                        rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      <RichTextEditor
+                        value={editData.content}
+                        onChange={(content) => setEditData({ ...editData, content })}
+                        placeholder="Enter your message..."
                       />
                     </div>
                   </div>
@@ -321,7 +334,36 @@ export default function ScriptEditor() {
                           {message.delayMs / 1000}s delay
                         </div>
                       </div>
-                      <p className="text-gray-900 whitespace-pre-wrap">{message.text}</p>
+                      <div className="text-gray-900">
+                        {message.content && message.content.length > 0 ? (
+                          message.content.map((item, index) => {
+                            switch (item.type) {
+                              case 'text':
+                                return (
+                                  <span key={index} className="whitespace-pre-wrap">
+                                    {item.content}
+                                  </span>
+                                );
+                              case 'link':
+                                return (
+                                  <span key={index} className="text-blue-600 underline">
+                                    [{item.content}]
+                                  </span>
+                                );
+                              case 'image':
+                                return (
+                                  <span key={index} className="text-gray-500 italic">
+                                    [Image: {item.alt || 'image'}]
+                                  </span>
+                                );
+                              default:
+                                return <span key={index}>{item.content}</span>;
+                            }
+                          })
+                        ) : (
+                          <span className="whitespace-pre-wrap">{message.text}</span>
+                        )}
+                      </div>
                     </div>
 
                     {/* Action Buttons */}
