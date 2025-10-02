@@ -116,12 +116,12 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="max-w-7xl mx-auto">
         <div className="flex h-[calc(100vh-8rem)]">
           {/* Left Panel - Controls */}
-          <div className="xl:w-2/5 w-full flex flex-col overflow-y-auto xl:pr-6 bg-gray-200 rounded-xl p-4">
+          <div className="xl:w-2/5 w-full flex flex-col overflow-y-auto xl:pr-6 bg-gray-200  p-4">
             {/* Mobile Tabs */}
-            <div className="xl:hidden bg-white rounded-xl border border-gray-200 shadow-sm">
+            <div className="xl:hidden bg-white border border-gray-200 shadow-sm">
               <div className="flex">
                 <button
                   onClick={() => setActiveTab('editor')}
@@ -160,7 +160,7 @@ export default function Home() {
           </div>
 
           {/* Vertical Divider */}
-          <div className="hidden xl:block w-0.5 bg-gray-400 mx-6"></div>
+          <div className="hidden xl:block w-0.5 bg-gray-400"></div>
 
           {/* Right Panel - Conversation View */}
           <div className="xl:w-3/5 w-full flex flex-col">

@@ -80,7 +80,7 @@ const defaultDesignConfig: DesignConfig = {
   fontFamily: 'system-ui',
   aspectRatio: '9:16',
   carrierName: 'Carrier',
-  frameType: 'mobile'
+  frameType: 'none'
 };
 
 const defaultPlaybackState: PlaybackState = {

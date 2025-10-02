@@ -47,7 +47,7 @@ export default function DesignControls() {
       fontFamily: 'system-ui',
       aspectRatio: '9:16',
       carrierName: 'Carrier',
-      frameType: 'mobile'
+      frameType: 'none'
     });
   };
 
