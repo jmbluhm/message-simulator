@@ -10,7 +10,8 @@ import {
   Type,
   Smartphone,
   Eye,
-  Wifi
+  Wifi,
+  Monitor
 } from 'lucide-react';
 
 export default function DesignControls() {
@@ -31,6 +32,11 @@ export default function DesignControls() {
     { value: '4:5', label: '4:5 (Instagram)' },
   ];
 
+  const frameTypes = [
+    { value: 'mobile', label: 'Mobile Phone' },
+    { value: 'none', label: 'No Frame' },
+  ];
+
   const resetToDefaults = () => {
     updateDesignConfig({
       party1Color: '#007AFF',
@@ -40,7 +46,8 @@ export default function DesignControls() {
       fontSize: 16,
       fontFamily: 'system-ui',
       aspectRatio: '9:16',
-      carrierName: 'Carrier'
+      carrierName: 'Carrier',
+      frameType: 'mobile'
     });
   };
 
@@ -194,6 +201,27 @@ export default function DesignControls() {
             </h3>
             
             <div className="space-y-4">
+              {/* Frame Type */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  <div className="flex items-center gap-2">
+                    <Monitor className="w-4 h-4" />
+                    Display Frame
+                  </div>
+                </label>
+                <select
+                  value={designConfig.frameType}
+                  onChange={(e) => updateDesignConfig({ frameType: e.target.value as 'mobile' | 'none' })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  {frameTypes.map((frame) => (
+                    <option key={frame.value} value={frame.value}>
+                      {frame.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Carrier Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-2">

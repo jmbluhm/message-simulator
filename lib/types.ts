@@ -19,6 +19,7 @@ export interface DesignConfig {
   fontFamily: string;
   aspectRatio: string;
   carrierName: string;
+  frameType: 'mobile' | 'none';
 }
 
 export interface PlaybackState {
