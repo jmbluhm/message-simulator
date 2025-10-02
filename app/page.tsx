@@ -66,7 +66,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,7 +119,7 @@ export default function Home() {
       <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         <div className="flex h-[calc(100vh-8rem)]">
           {/* Left Panel - Controls */}
-          <div className="xl:w-2/5 w-full flex flex-col overflow-y-auto xl:pr-6">
+          <div className="xl:w-2/5 w-full flex flex-col overflow-y-auto xl:pr-6 bg-gray-200 rounded-xl p-4">
             {/* Mobile Tabs */}
             <div className="xl:hidden bg-white rounded-xl border border-gray-200 shadow-sm">
               <div className="flex">
@@ -164,7 +164,7 @@ export default function Home() {
 
           {/* Right Panel - Conversation View */}
           <div className="xl:w-3/5 w-full flex flex-col">
-            <div className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0 mb-4">
               <ConversationView className="h-full" />
             </div>
             
