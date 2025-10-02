@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useConversationStore } from '@/lib/store';
 import { useConversationPlayer } from '@/hooks/useConversationPlayer';
 import MessageBubble from './MessageBubble';
@@ -12,24 +12,12 @@ interface ConversationViewProps {
 
 export default function ConversationView({ className = '' }: ConversationViewProps) {
   const { script, designConfig, playbackState } = useConversationStore();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   
   const { displayedMessages, isTyping, typingSender } = useConversationPlayer({
     script,
     designConfig,
-    playbackState,
-    onMessageAdded: () => {
-      // Auto-scroll to bottom when new message is added
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
+    playbackState
   });
-
-  // Auto-scroll when typing indicator appears/disappears
-  useEffect(() => {
-    if (isTyping || displayedMessages.length > 0) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [isTyping, displayedMessages.length]);
 
   // Calculate aspect ratio styles
   const getAspectRatioStyle = () => {
@@ -96,9 +84,6 @@ export default function ConversationView({ className = '' }: ConversationViewPro
                   designConfig={designConfig}
                 />
               )}
-              
-              {/* Auto-scroll anchor */}
-              <div ref={messagesEndRef} />
             </div>
           </div>
 

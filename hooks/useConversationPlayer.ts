@@ -7,7 +7,6 @@ interface UseConversationPlayerProps {
   script: Script;
   designConfig: DesignConfig;
   playbackState: PlaybackState;
-  onMessageAdded?: () => void; // Callback for auto-scroll
 }
 
 interface UseConversationPlayerReturn {
@@ -19,8 +18,7 @@ interface UseConversationPlayerReturn {
 export function useConversationPlayer({
   script,
   designConfig,
-  playbackState,
-  onMessageAdded
+  playbackState
 }: UseConversationPlayerProps): UseConversationPlayerReturn {
   const [displayedMessages, setDisplayedMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -74,9 +72,6 @@ export function useConversationPlayer({
           setDisplayedMessages(prev => [...prev, message]);
           currentMessageIndexRef.current = messageIndex + 1;
           
-          // Trigger auto-scroll callback
-          onMessageAdded?.();
-
           // Process next message
           processMessage(messageIndex + 1);
         }, typingDuration);
@@ -87,9 +82,6 @@ export function useConversationPlayer({
         setDisplayedMessages(prev => [...prev, message]);
         currentMessageIndexRef.current = messageIndex + 1;
         
-        // Trigger auto-scroll callback
-        onMessageAdded?.();
-
         // Process next message
         processMessage(messageIndex + 1);
       }
