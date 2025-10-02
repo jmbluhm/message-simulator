@@ -116,7 +116,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto">
+      <main className="max-w-7xl mx-auto bg-gray-100 min-h-[calc(100vh-4rem)]">
         <div className="flex h-[calc(100vh-8rem)]">
           {/* Left Panel - Controls */}
           <div className="xl:w-2/5 w-full flex flex-col overflow-y-auto xl:pr-6 bg-gray-200  p-4">
