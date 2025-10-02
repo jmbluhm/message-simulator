@@ -117,9 +117,9 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 h-[calc(100vh-8rem)]">
+        <div className="flex h-[calc(100vh-8rem)]">
           {/* Left Panel - Controls */}
-          <div className="xl:col-span-2 space-y-6 overflow-y-auto">
+          <div className="xl:w-2/5 w-full space-y-6 overflow-y-auto xl:pr-6">
             {/* Mobile Tabs */}
             <div className="xl:hidden bg-white rounded-xl border border-gray-200 shadow-sm">
               <div className="flex">
@@ -159,8 +159,11 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Vertical Divider */}
+          <div className="hidden xl:block w-px bg-gray-300 mx-6"></div>
+
           {/* Right Panel - Conversation View */}
-          <div className="xl:col-span-3 flex flex-col space-y-6">
+          <div className="xl:w-3/5 w-full flex flex-col space-y-6">
             <div className="flex-1">
               <ConversationView className="h-full" />
             </div>
