@@ -163,8 +163,8 @@ export default function Home() {
           <div className="hidden xl:block w-0.5 bg-gray-400 mx-6"></div>
 
           {/* Right Panel - Conversation View */}
-          <div className="xl:w-3/5 w-full flex flex-col space-y-6">
-            <div className="flex-1">
+          <div className="xl:w-3/5 w-full flex flex-col">
+            <div className="flex-1 min-h-0">
               <ConversationView className="h-full" />
             </div>
             

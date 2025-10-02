@@ -118,16 +118,6 @@ export default function PlaybackControls() {
           </span>
         </div>
       </div>
-
-      {/* Keyboard Shortcuts Help */}
-      <div className="mt-3 pt-3 border-t border-gray-200">
-        <div className="flex items-center justify-center text-xs text-gray-500">
-          <span className="flex items-center gap-1">
-            <kbd className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">Space</kbd>
-            Play/Pause
-          </span>
-        </div>
-      </div>
     </div>
   );
 }

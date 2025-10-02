@@ -31,7 +31,7 @@ export default function ConversationView({ className = '' }: ConversationViewPro
     const aspectRatio = width / height;
     return {
       aspectRatio: aspectRatio.toString(),
-      maxHeight: '80vh',
+      height: '100%',
     };
   };
 
@@ -39,8 +39,8 @@ export default function ConversationView({ className = '' }: ConversationViewPro
   const renderMessagesContent = () => (
     <>
       {/* Messages Container */}
-      <div className={`${designConfig.frameType === 'mobile' ? 'pt-16 pb-4 px-4' : 'p-4'} h-full overflow-y-auto`}>
-        <div className="space-y-2 min-h-full">
+      <div className={`${designConfig.frameType === 'mobile' ? 'pt-16 pb-4 px-4' : 'p-4'} h-full flex flex-col`}>
+        <div className="flex-1 flex flex-col justify-end space-y-2">
           {displayedMessages.map((message) => (
             <MessageBubble
               key={message.id}
@@ -62,7 +62,7 @@ export default function ConversationView({ className = '' }: ConversationViewPro
 
       {/* Empty State */}
       {displayedMessages.length === 0 && !isTyping && (
-        <div className="flex items-center justify-center h-full">
+        <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-gray-500">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-200 flex items-center justify-center">
               <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
