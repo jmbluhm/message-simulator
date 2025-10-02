@@ -48,16 +48,12 @@ export default function PlaybackControls() {
             play();
           }
           break;
-        case 'KeyR':
-          event.preventDefault();
-          reset();
-          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [playbackState.isPlaying, isScriptEmpty, play, pause, reset]);
+  }, [playbackState.isPlaying, isScriptEmpty, play, pause]);
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
@@ -125,14 +121,10 @@ export default function PlaybackControls() {
 
       {/* Keyboard Shortcuts Help */}
       <div className="mt-3 pt-3 border-t border-gray-200">
-        <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
+        <div className="flex items-center justify-center text-xs text-gray-500">
           <span className="flex items-center gap-1">
             <kbd className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">Space</kbd>
             Play/Pause
-          </span>
-          <span className="flex items-center gap-1">
-            <kbd className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">R</kbd>
-            Reset
           </span>
         </div>
       </div>
