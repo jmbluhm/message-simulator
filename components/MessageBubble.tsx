@@ -75,11 +75,28 @@ export default function MessageBubble({ message, designConfig, sender }: Message
               <img
                 src={item.content}
                 alt={item.alt || 'Image'}
-                className="max-w-full h-auto rounded-lg"
-                style={{ maxHeight: '200px' }}
+                className="max-w-full h-auto rounded-lg block"
+                style={{ 
+                  maxHeight: '200px',
+                  objectFit: 'cover'
+                }}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = `
+                      <div class="flex items-center justify-center p-4 bg-gray-100 rounded-lg text-gray-500 text-sm">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Image failed to load
+                      </div>
+                    `;
+                  }
+                }}
+                onLoad={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'block';
                 }}
               />
             </div>
@@ -93,20 +110,20 @@ export default function MessageBubble({ message, designConfig, sender }: Message
 
   return (
     <motion.div
-      className={`flex ${isParty1 ? 'justify-end' : 'justify-start'} mb-3`}
+      className={`flex ${isParty1 ? 'justify-end' : 'justify-start'} mb-2`}
       variants={bubbleVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.div
-        className="max-w-[70%] rounded-[18px] px-4 py-3 shadow-lg"
+        className="max-w-[75%] rounded-[18px] px-4 py-3 shadow-sm"
         style={{
           backgroundColor,
           color: textColor,
           fontSize: `${designConfig.fontSize}px`,
           fontFamily: designConfig.fontFamily,
         }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.2 }}
       >
         <div className="leading-relaxed">

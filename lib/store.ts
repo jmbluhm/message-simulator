@@ -78,6 +78,24 @@ const sampleScript: Script = {
       sender: 'party2',
       text: 'Thanks! The timing and visual effects really make a difference. Want to see how it works?',
       delayMs: 2000
+    },
+    {
+      id: '7',
+      sender: 'party1',
+      text: 'Sure! Send me a screenshot',
+      delayMs: 1500
+    },
+    {
+      id: '8',
+      sender: 'party2',
+      content: [
+        {
+          type: 'image',
+          content: 'https://picsum.photos/300/400',
+          alt: 'Screenshot of the conversation simulator'
+        }
+      ],
+      delayMs: 1000
     }
   ]
 };

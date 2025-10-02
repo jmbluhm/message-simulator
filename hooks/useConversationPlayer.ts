@@ -34,9 +34,26 @@ export function useConversationPlayer({
     timeoutsRef.current = [];
   };
 
-  // Calculate typing duration based on message text length
-  const calculateTypingDuration = (text: string): number => {
-    return Math.max(text.length * 50, 500); // Minimum 500ms, 50ms per character
+  // Calculate typing duration based on message content
+  const calculateTypingDuration = (message: Message): number => {
+    let textLength = 0;
+    
+    // If message has rich content, calculate length from content
+    if (message.content && message.content.length > 0) {
+      textLength = message.content
+        .filter(item => item.type === 'text')
+        .reduce((total, item) => total + (item.content?.length || 0), 0);
+    } else if (message.text) {
+      // Fall back to text property
+      textLength = message.text.length;
+    }
+    
+    // For images or other non-text content, use a fixed duration
+    if (textLength === 0) {
+      return 1000; // 1 second for images/other content
+    }
+    
+    return Math.max(textLength * 50, 500); // Minimum 500ms, 50ms per character
   };
 
   // Process a single message with delay and typing
@@ -56,7 +73,7 @@ export function useConversationPlayer({
 
       // Show typing indicator if enabled
       if (designConfig.showTyping) {
-        const typingDuration = calculateTypingDuration(message.text) / playbackState.speed;
+        const typingDuration = calculateTypingDuration(message) / playbackState.speed;
         
         setIsTyping(true);
         setTypingSender(message.sender);

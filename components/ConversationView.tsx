@@ -13,6 +13,7 @@ interface ConversationViewProps {
 export default function ConversationView({ className = '' }: ConversationViewProps) {
   const { script, designConfig, playbackState } = useConversationStore();
   const [isHydrated, setIsHydrated] = useState(false);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   
   // Ensure component is hydrated before rendering to prevent hydration mismatches
   useEffect(() => {
@@ -24,6 +25,13 @@ export default function ConversationView({ className = '' }: ConversationViewPro
     designConfig,
     playbackState
   });
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [displayedMessages, isTyping]);
 
   // Calculate aspect ratio styles
   const getAspectRatioStyle = () => {
@@ -39,23 +47,29 @@ export default function ConversationView({ className = '' }: ConversationViewPro
   const renderMessagesContent = () => (
     <>
       {/* Messages Container */}
-      <div className={`${designConfig.frameType === 'mobile' ? 'pt-16 pb-4 px-4' : 'p-4'} h-full flex flex-col`}>
-        <div className="flex-1 flex flex-col justify-end space-y-2">
-          {displayedMessages.map((message) => (
-            <MessageBubble
-              key={message.id}
-              message={message}
-              designConfig={designConfig}
-              sender={message.sender}
-            />
+      <div className={`${designConfig.frameType === 'mobile' ? 'pt-0 pb-4 px-4' : 'p-4'} h-full flex flex-col`}>
+        <div 
+          ref={messagesContainerRef}
+          className="flex-1 flex flex-col justify-end space-y-3 overflow-y-auto scrollbar-hide"
+        >
+          {displayedMessages.map((message, index) => (
+            <div key={message.id} className={index === 0 && designConfig.frameType === 'mobile' ? 'pt-16' : ''}>
+              <MessageBubble
+                message={message}
+                designConfig={designConfig}
+                sender={message.sender}
+              />
+            </div>
           ))}
           
           {/* Typing Indicator */}
           {isTyping && typingSender && (
-            <TypingIndicator
-              sender={typingSender}
-              designConfig={designConfig}
-            />
+            <div className={displayedMessages.length === 0 && designConfig.frameType === 'mobile' ? 'pt-16' : ''}>
+              <TypingIndicator
+                sender={typingSender}
+                designConfig={designConfig}
+              />
+            </div>
           )}
         </div>
       </div>
@@ -92,11 +106,11 @@ export default function ConversationView({ className = '' }: ConversationViewPro
   }
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative w-full h-full flex items-center justify-center p-4 ${className}`}>
       {designConfig.frameType === 'mobile' ? (
         /* Mock Phone Container */
         <div 
-          className="relative mx-auto bg-black rounded-[2.5rem] p-2 shadow-2xl"
+          className="relative bg-black rounded-[2.5rem] p-2 shadow-2xl max-w-full max-h-full"
           style={getAspectRatioStyle()}
         >
           {/* Mock Phone Screen */}
@@ -105,7 +119,7 @@ export default function ConversationView({ className = '' }: ConversationViewPro
             style={{ backgroundColor: designConfig.backgroundColor }}
           >
             {/* Mock Phone Header */}
-            <div className="absolute top-0 left-0 right-0 z-10 bg-black/5 backdrop-blur-sm">
+            <div className="absolute top-0 left-0 right-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-200/50">
               <div className="flex items-center justify-between px-6 py-3 text-sm font-medium text-gray-700">
                 <div className="flex items-center gap-1">
                   <div className="w-1 h-1 bg-gray-400 rounded-full"></div>

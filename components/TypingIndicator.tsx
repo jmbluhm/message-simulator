@@ -31,48 +31,43 @@ export default function TypingIndicator({ sender, designConfig }: TypingIndicato
     },
   };
 
-  // Animation variants for individual dots
-  const dotVariants: Variants = {
+  // Create individual dot variants with proper stagger timing
+  const createDotVariants = (delay: number): Variants => ({
     bounce: {
-      y: [-8, 0, -8],
+      y: [-6, 0, -6],
       transition: {
         duration: 0.6,
+        delay: delay,
         repeat: Infinity,
-        ease: [0.42, 0, 0.58, 1], // easeInOut cubic-bezier
+        ease: [0.4, 0, 0.6, 1], // iOS-style easing
       },
     },
-  };
+  });
 
   return (
     <motion.div
-      className={`flex ${isParty1 ? 'justify-end' : 'justify-start'} mb-3`}
+      className={`flex ${isParty1 ? 'justify-end' : 'justify-start'} mb-2`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.div
-        className="rounded-[18px] px-4 py-3 shadow-lg flex items-center gap-1"
+        className="rounded-[18px] px-4 py-3 shadow-sm flex items-center gap-1"
         style={{
           backgroundColor,
           color: textColor,
         }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.2 }}
       >
-        {/* Three bouncing dots */}
+        {/* Three bouncing dots with iOS-style wave animation */}
         {[0, 1, 2].map((index) => (
           <motion.div
             key={index}
             className="w-2 h-2 rounded-full"
             style={{ backgroundColor: textColor }}
-            variants={dotVariants}
+            variants={createDotVariants(index * 0.15)}
             animate="bounce"
-            transition={{
-              delay: index * 0.15, // 150ms stagger between dots
-              duration: 0.6,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
           />
         ))}
       </motion.div>

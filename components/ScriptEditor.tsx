@@ -200,7 +200,7 @@ export default function ScriptEditor() {
             <div className="flex items-end">
               <button
                 type="submit"
-                disabled={!formData.text.trim()}
+                disabled={!formData.text.trim() && formData.content.length === 0}
                 className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
               >
                 <Plus className="w-4 h-4" />
@@ -352,9 +352,23 @@ export default function ScriptEditor() {
                                 );
                               case 'image':
                                 return (
-                                  <span key={index} className="text-gray-500 italic">
-                                    [Image: {item.alt || 'image'}]
-                                  </span>
+                                  <div key={index} className="my-2">
+                                    <img
+                                      src={item.content}
+                                      alt={item.alt || 'Image'}
+                                      className="max-w-[200px] h-auto rounded-lg border border-gray-200"
+                                      style={{ maxHeight: '120px' }}
+                                      onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.style.display = 'none';
+                                        // Show fallback text if image fails to load
+                                        const fallback = document.createElement('span');
+                                        fallback.className = 'text-gray-500 italic text-sm';
+                                        fallback.textContent = `[Image: ${item.alt || 'image'}]`;
+                                        target.parentNode?.appendChild(fallback);
+                                      }}
+                                    />
+                                  </div>
                                 );
                               default:
                                 return <span key={index}>{item.content}</span>;
