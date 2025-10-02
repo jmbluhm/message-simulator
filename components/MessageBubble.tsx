@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Message, DesignConfig } from '@/lib/types';
 
 interface MessageBubbleProps {
@@ -17,7 +17,7 @@ export default function MessageBubble({ message, designConfig, sender }: Message
   const textColor = isParty1 ? '#FFFFFF' : '#000000'; // White text for party1, black for party2
   
   // Animation variants
-  const bubbleVariants = {
+  const bubbleVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 20,
@@ -27,7 +27,7 @@ export default function MessageBubble({ message, designConfig, sender }: Message
       y: 0,
       transition: {
         duration: 0.3,
-        ease: 'easeOut',
+        ease: [0.25, 0.46, 0.45, 0.94], // easeOut cubic-bezier
       },
     },
   };

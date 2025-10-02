@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { DesignConfig } from '@/lib/types';
 
 interface TypingIndicatorProps {
@@ -16,7 +16,7 @@ export default function TypingIndicator({ sender, designConfig }: TypingIndicato
   const textColor = isParty1 ? '#FFFFFF' : '#000000'; // White text for party1, black for party2
   
   // Animation variants for the container
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {
       opacity: 0,
       y: 20,
@@ -26,19 +26,19 @@ export default function TypingIndicator({ sender, designConfig }: TypingIndicato
       y: 0,
       transition: {
         duration: 0.3,
-        ease: 'easeOut',
+        ease: [0.25, 0.46, 0.45, 0.94], // easeOut cubic-bezier
       },
     },
   };
 
   // Animation variants for individual dots
-  const dotVariants = {
+  const dotVariants: Variants = {
     bounce: {
       y: [-8, 0, -8],
       transition: {
         duration: 0.6,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: [0.42, 0, 0.58, 1], // easeInOut cubic-bezier
       },
     },
   };
