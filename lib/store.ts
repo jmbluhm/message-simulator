@@ -78,7 +78,8 @@ const defaultDesignConfig: DesignConfig = {
   showTyping: true,
   fontSize: 16,
   fontFamily: 'system-ui',
-  aspectRatio: '9:16'
+  aspectRatio: '9:16',
+  carrierName: 'Carrier'
 };
 
 const defaultPlaybackState: PlaybackState = {

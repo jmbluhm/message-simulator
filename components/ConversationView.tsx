@@ -60,7 +60,7 @@ export default function ConversationView({ className = '' }: ConversationViewPro
                 <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
                 <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
                 <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                <span className="ml-2 text-xs">Carrier</span>
+                <span className="ml-2 text-xs">{designConfig.carrierName}</span>
               </div>
               <div className="text-sm font-semibold">9:41</div>
               <div className="flex items-center gap-1">

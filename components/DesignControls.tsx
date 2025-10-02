@@ -9,7 +9,8 @@ import {
   RotateCcw,
   Type,
   Smartphone,
-  Eye
+  Eye,
+  Wifi
 } from 'lucide-react';
 
 export default function DesignControls() {
@@ -38,7 +39,8 @@ export default function DesignControls() {
       showTyping: true,
       fontSize: 16,
       fontFamily: 'system-ui',
-      aspectRatio: '9:16'
+      aspectRatio: '9:16',
+      carrierName: 'Carrier'
     });
   };
 
@@ -192,6 +194,23 @@ export default function DesignControls() {
             </h3>
             
             <div className="space-y-4">
+              {/* Carrier Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  <div className="flex items-center gap-2">
+                    <Wifi className="w-4 h-4" />
+                    Carrier Name
+                  </div>
+                </label>
+                <input
+                  type="text"
+                  value={designConfig.carrierName}
+                  onChange={(e) => updateDesignConfig({ carrierName: e.target.value })}
+                  placeholder="Carrier"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
               {/* Aspect Ratio */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-2">

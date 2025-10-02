@@ -18,6 +18,7 @@ export interface DesignConfig {
   fontSize: number;
   fontFamily: string;
   aspectRatio: string;
+  carrierName: string;
 }
 
 export interface PlaybackState {
