@@ -88,6 +88,7 @@ const sampleScript: Script = {
     {
       id: '8',
       sender: 'party2',
+      text: '', // Empty text since we're using rich content
       content: [
         {
           type: 'image',
